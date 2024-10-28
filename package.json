@@ -1,0 +1,21 @@
+{
+	"name": "exam-fusion-api",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node src/app.js",
+		"dev": "nodemon src/app.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"dotenv": "^16.4.5",
+		"fastify": "^5.0.0",
+		"mongoose": "^8.7.0"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.7"
+	}
+}
