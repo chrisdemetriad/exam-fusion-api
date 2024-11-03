@@ -1,8 +1,14 @@
 const fastify = require("fastify")({ logger: true });
+const cors = require("@fastify/cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const accaRoutes = require("./routes/acca.routes");
 const dvlaRoutes = require("./routes/dvla.routes");
+
+fastify.register(cors, {
+	origin: "http://localhost:4000",
+	methods: ["GET", "POST"],
+});
 
 fastify.register(accaRoutes, { prefix: "/api/v1/tests/acca" });
 fastify.register(dvlaRoutes, { prefix: "/api/v1/tests/dvla" });
