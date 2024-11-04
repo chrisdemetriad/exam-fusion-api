@@ -1,8 +1,22 @@
+const mongoose = require("mongoose");
+require("dotenv").config();
+
 const TestAttempt = require("../models/accaTestAttempt");
+const AccaTest = require("../models/acca.model.js");
 
 async function getAllTests(request, reply) {
 	try {
-		reply.send("Not implemented yet");
+		const allTests = await AccaTest.find();
+		reply.send(allTests);
+	} catch (error) {
+		reply.status(500).send(error);
+	}
+}
+
+async function getAttemptedTests(request, reply) {
+	try {
+		const attemptedTests = await TestAttempt.find();
+		reply.send(attemptedTests);
 	} catch (error) {
 		reply.status(500).send(error);
 	}
@@ -10,11 +24,10 @@ async function getAllTests(request, reply) {
 
 async function saveTest(request, reply) {
 	try {
-		console.log(`Request body: ${request.body}`);
 		const { userId, testType, startTime, finishTime, wrongAnswers } =
 			request.body;
 
-		const testAttempt = new TestAttempt({
+		const newTestAttempt = new TestAttempt({
 			userId,
 			testType,
 			startTime,
@@ -22,7 +35,7 @@ async function saveTest(request, reply) {
 			wrongAnswers,
 		});
 
-		await testAttempt.save();
+		await newTestAttempt.save();
 		reply.send({ success: true, message: "Test saved" });
 	} catch (error) {
 		reply
@@ -32,6 +45,7 @@ async function saveTest(request, reply) {
 }
 
 module.exports = {
+	getAttemptedTests,
 	getAllTests,
 	saveTest,
 };
