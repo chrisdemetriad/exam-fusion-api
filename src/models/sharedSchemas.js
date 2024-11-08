@@ -7,6 +7,7 @@ const answerSchema = new mongoose.Schema({
 });
 
 const questionBlockSchema = new mongoose.Schema({
+	id: { type: Number, required: true },
 	questionText: { type: String, required: true },
 	questionImage: String,
 	answerType: {
@@ -15,7 +16,6 @@ const questionBlockSchema = new mongoose.Schema({
 		required: true,
 	},
 	possibleAnswers: [answerSchema],
-	keywords: [String],
 });
 
 const questionSchema = new mongoose.Schema({
