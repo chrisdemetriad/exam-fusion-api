@@ -22,6 +22,15 @@ async function getAttemptedTests(request, reply) {
 	}
 }
 
+async function getLeaderboard(request, reply) {
+	try {
+		const attemptedTests = await TestAttempt.find();
+		reply.send(attemptedTests);
+	} catch (error) {
+		reply.status(500).send(error);
+	}
+}
+
 async function saveTest(request, reply) {
 	try {
 		const { userId, testType, startTime, finishTime, wrongAnswers } =
@@ -48,4 +57,5 @@ module.exports = {
 	getAttemptedTests,
 	getAllTests,
 	saveTest,
+	getLeaderboard,
 };
