@@ -1,26 +1,36 @@
 const mongoose = require("mongoose");
 const fs = require("node:fs");
-require("dotenv").config({ path: `${__dirname}/../../.env` });
+require("dotenv").config();
 
-const AccaTest = require("./../models/acca.model");
+const Test = require("./../models/test.model");
 
-const loadTestData = () => {
+const loadTestData = (fileName) => {
 	try {
-		const data = fs.readFileSync(`${__dirname}/accaAllQuestions.json`, "utf8");
+		const data = fs.readFileSync(`${__dirname}/${fileName}`, "utf8");
 		return JSON.parse(data);
 	} catch (error) {
-		console.error("Can't read the JSON file", error);
+		console.error(`Can't read the JSON file from ${fileName}`, error);
 		process.exit(1);
 	}
 };
 
-const accaTestData = loadTestData();
-
 const seedDB = async () => {
 	try {
 		await mongoose.connect(process.env.MONGO_URI);
-		await AccaTest.deleteMany({});
-		await AccaTest.insertMany(accaTestData);
+		await Test.deleteMany({});
+
+		const accaTestData = loadTestData("accaTests.json");
+		const cimaTestData = loadTestData("cimaTests.json");
+		const acaTestData = loadTestData("acaTests.json");
+		const aatTestData = loadTestData("aatTests.json");
+
+		await Test.insertMany([
+			...accaTestData,
+			...cimaTestData,
+			...acaTestData,
+			...aatTestData,
+		]);
+
 		console.log("\x1b[32mTest data seeded successfully!\x1b[0m");
 	} catch (error) {
 		console.error("\x1b[31mError seeding data:\x1b[0m", error);

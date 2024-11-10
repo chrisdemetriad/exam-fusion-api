@@ -1,5 +1,7 @@
 [
 	{
+		"provider": "ACCA",
+		"level": "Applied Knowledge",
 		"title": "ACCA F1",
 		"description": "Accountant in Business",
 		"questions": [

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const accaTestAttemptSchema = new mongoose.Schema(
+const testAttemptSchema = new mongoose.Schema(
 	{
 		userId: { type: String, required: true },
 		testType: { type: String, required: true },
@@ -17,4 +17,4 @@ const accaTestAttemptSchema = new mongoose.Schema(
 	{ timestamps: true },
 );
 
-module.exports = mongoose.model("TestAttempt", accaTestAttemptSchema);
+module.exports = mongoose.model("TestAttempt", testAttemptSchema);
