@@ -7,22 +7,22 @@
 		"questions": [
 			{
 				"id": 1,
-				"questionText": "What is the primary purpose of accounting?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "Tax calculation" },
-					{ "answerText": "Financial reporting", "isCorrect": true },
-					{ "answerText": "Inventory management" }
+				"question": "What is the primary purpose of accounting?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "Tax calculation" },
+					{ "answer": "Financial reporting", "isCorrect": true },
+					{ "answer": "Inventory management" }
 				]
 			},
 			{
 				"id": 2,
-				"questionText": "Which of the following is a financial statement?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "Balance sheet", "isCorrect": true },
-					{ "answerText": "Marketing plan" },
-					{ "answerText": "HR policy" }
+				"question": "Which of the following is a financial statement?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "Balance sheet", "isCorrect": true },
+					{ "answer": "Marketing plan" },
+					{ "answer": "HR policy" }
 				]
 			}
 		]
@@ -35,22 +35,22 @@
 		"questions": [
 			{
 				"id": 1,
-				"questionText": "What is the role of assurance in business?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "To verify financial statements", "isCorrect": true },
-					{ "answerText": "To manage marketing campaigns" },
-					{ "answerText": "To develop IT systems" }
+				"question": "What is the role of assurance in business?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "To verify financial statements", "isCorrect": true },
+					{ "answer": "To manage marketing campaigns" },
+					{ "answer": "To develop IT systems" }
 				]
 			},
 			{
 				"id": 2,
-				"questionText": "Which of the following is a type of assurance service?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "Tax advisory" },
-					{ "answerText": "Audit", "isCorrect": true },
-					{ "answerText": "HR consulting" }
+				"question": "Which of the following is a type of assurance service?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "Tax advisory" },
+					{ "answer": "Audit", "isCorrect": true },
+					{ "answer": "HR consulting" }
 				]
 			}
 		]

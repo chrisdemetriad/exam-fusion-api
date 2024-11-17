@@ -7,25 +7,25 @@
 		"questions": [
 			{
 				"id": 1,
-				"questionText": "What is the purpose of bookkeeping?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "To manage HR records" },
+				"question": "What is the purpose of bookkeeping?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "To manage HR records" },
 					{
-						"answerText": "To record financial transactions",
+						"answer": "To record financial transactions",
 						"isCorrect": true
 					},
-					{ "answerText": "To plan marketing strategies" }
+					{ "answer": "To plan marketing strategies" }
 				]
 			},
 			{
 				"id": 2,
-				"questionText": "Which of the following is a bookkeeping task?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "Preparing financial statements" },
-					{ "answerText": "Recording sales invoices", "isCorrect": true },
-					{ "answerText": "Developing software" }
+				"question": "Which of the following is a bookkeeping task?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "Preparing financial statements" },
+					{ "answer": "Recording sales invoices", "isCorrect": true },
+					{ "answer": "Developing software" }
 				]
 			}
 		]
@@ -38,22 +38,22 @@
 		"questions": [
 			{
 				"id": 1,
-				"questionText": "What is the main objective of costing?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "To determine product prices", "isCorrect": true },
-					{ "answerText": "To manage HR policies" },
-					{ "answerText": "To create marketing plans" }
+				"question": "What is the main objective of costing?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "To determine product prices", "isCorrect": true },
+					{ "answer": "To manage HR policies" },
+					{ "answer": "To create marketing plans" }
 				]
 			},
 			{
 				"id": 2,
-				"questionText": "Which of the following is a costing method?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "Job costing", "isCorrect": true },
-					{ "answerText": "HR costing" },
-					{ "answerText": "Marketing costing" }
+				"question": "Which of the following is a costing method?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "Job costing", "isCorrect": true },
+					{ "answer": "HR costing" },
+					{ "answer": "Marketing costing" }
 				]
 			}
 		]

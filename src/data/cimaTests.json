@@ -7,22 +7,22 @@
 		"questions": [
 			{
 				"id": 1,
-				"questionText": "What is the impact of digital technology on finance?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "Increased manual processes" },
-					{ "answerText": "Automation of tasks", "isCorrect": true },
-					{ "answerText": "Decreased data availability" }
+				"question": "What is the impact of digital technology on finance?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "Increased manual processes" },
+					{ "answer": "Automation of tasks", "isCorrect": true },
+					{ "answer": "Decreased data availability" }
 				]
 			},
 			{
 				"id": 2,
-				"questionText": "Which of the following is a benefit of digital finance?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "Reduced transparency" },
-					{ "answerText": "Improved decision making", "isCorrect": true },
-					{ "answerText": "Increased costs" }
+				"question": "Which of the following is a benefit of digital finance?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "Reduced transparency" },
+					{ "answer": "Improved decision making", "isCorrect": true },
+					{ "answer": "Increased costs" }
 				]
 			}
 		]
@@ -35,22 +35,22 @@
 		"questions": [
 			{
 				"id": 1,
-				"questionText": "What is the focus of advanced management accounting?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "Basic cost analysis" },
-					{ "answerText": "Strategic decision making", "isCorrect": true },
-					{ "answerText": "Financial auditing" }
+				"question": "What is the focus of advanced management accounting?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "Basic cost analysis" },
+					{ "answer": "Strategic decision making", "isCorrect": true },
+					{ "answer": "Financial auditing" }
 				]
 			},
 			{
 				"id": 2,
-				"questionText": "Which technique is used in advanced management accounting?",
-				"answerType": "radio",
-				"possibleAnswers": [
-					{ "answerText": "Variance analysis", "isCorrect": true },
-					{ "answerText": "Simple budgeting" },
-					{ "answerText": "Basic bookkeeping" }
+				"question": "Which technique is used in advanced management accounting?",
+				"type": "radio",
+				"answers": [
+					{ "answer": "Variance analysis", "isCorrect": true },
+					{ "answer": "Simple budgeting" },
+					{ "answer": "Basic bookkeeping" }
 				]
 			}
 		]
