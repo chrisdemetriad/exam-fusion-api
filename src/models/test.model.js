@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
 
 const answerSchema = new mongoose.Schema({
-	answerText: String,
+	answer: String,
 	isCorrect: { type: Boolean, default: false },
 });
 
 const questionSchema = new mongoose.Schema({
 	id: { type: Number, required: true },
-	questionText: { type: String, required: true },
-	answerType: {
+	question: { type: String, required: true },
+	type: {
 		type: String,
 		enum: ["radio", "checkbox", "input", "boolean"],
 		required: true,
 	},
-	possibleAnswers: [answerSchema],
+	answers: [answerSchema],
 });
 
 const testSchema = new mongoose.Schema(

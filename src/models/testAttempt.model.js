@@ -9,8 +9,8 @@ const testAttemptSchema = new mongoose.Schema(
 		wrongAnswers: [
 			{
 				questionId: { type: Number, required: true },
-				questionText: { type: String, required: true },
-				correctAnswer: [String],
+				question: { type: String, required: true },
+				answer: [String],
 			},
 		],
 	},
