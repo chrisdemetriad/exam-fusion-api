@@ -6,7 +6,7 @@ const testAttemptSchema = new mongoose.Schema(
 		testType: { type: String, required: true },
 		startTime: { type: Date, required: true },
 		finishTime: { type: Date, required: true },
-		wrongAnswers: [
+		wrong: [
 			{
 				questionId: { type: Number, required: true },
 				question: { type: String, required: true },

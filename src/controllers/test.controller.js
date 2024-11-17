@@ -38,15 +38,14 @@ async function getTestById(request, reply) {
 
 async function saveTestAttempt(request, reply) {
 	try {
-		const { userId, testType, startTime, finishTime, wrongAnswers } =
-			request.body;
+		const { userId, testType, startTime, finishTime, wrong } = request.body;
 
 		const newTestAttempt = new TestAttempt({
 			userId,
 			testType,
 			startTime,
 			finishTime,
-			wrongAnswers,
+			wrong,
 		});
 
 		await newTestAttempt.save();
