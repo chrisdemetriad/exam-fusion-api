@@ -3,6 +3,7 @@ const fs = require("node:fs");
 require("dotenv").config();
 
 const Test = require("./../models/test.model");
+const TestAttempt = require("./../models/testAttempt.model");
 
 const loadTestData = (fileName) => {
 	try {
@@ -18,6 +19,7 @@ const seedDB = async () => {
 	try {
 		await mongoose.connect(process.env.MONGO_URI);
 		await Test.deleteMany({});
+		await TestAttempt.deleteMany({});
 
 		const accaTestData = loadTestData("accaTests.json");
 		const cimaTestData = loadTestData("cimaTests.json");
