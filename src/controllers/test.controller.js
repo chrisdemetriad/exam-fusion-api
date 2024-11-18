@@ -25,36 +25,75 @@ async function getTestsByProvider(request, reply) {
 async function getTestById(request, reply) {
 	try {
 		const { provider, id } = request.params;
-		const test = await Test.findOne({ provider, _id: id });
-		if (test) {
+		const { limit } = request.query;
+
+		const test = await Test.findById(id);
+
+		if (test && test.provider === provider) {
+			if (limit) {
+				test.questions = test.questions.sort(() => Math.random() - 0.5);
+				test.questions = test.questions.slice(0, Number.parseInt(limit, 10));
+			}
 			reply.send(test);
+		} else if (test) {
+			reply
+				.status(400)
+				.send({ message: "It doesn't belong to requested provider" });
 		} else {
-			reply.status(404).send({ message: "Could not find test" });
+			reply.status(404).send({ message: "Couldn't find test" });
 		}
 	} catch (error) {
-		reply.status(500).send(error);
+		console.error("Can't fetch test by id", error);
+		reply.status(500).send({ message: "Internal server error", error });
+	}
+}
+
+async function getUserProgress(request, reply) {
+	try {
+		const { userId } = request.params;
+
+		const progressData = await TestAttempt.find({ userId })
+			.populate("testId", "provider title")
+			.lean();
+
+		if (progressData.length === 0) {
+			reply
+				.status(404)
+				.send({ message: "Couldn't find any progress data for you" });
+			return;
+		}
+
+		reply.send(progressData);
+	} catch (error) {
+		console.error("Couldn't fetch user progress", error);
+		reply.status(500).send({ message: "Couldn't fetch user progress", error });
 	}
 }
 
 async function saveTestAttempt(request, reply) {
 	try {
-		const { userId, testType, startTime, finishTime, wrong } = request.body;
+		const { userId, startTime, finishTime, score, number, wrong } =
+			request.body;
+		const { id: testId } = request.params;
 
 		const newTestAttempt = new TestAttempt({
 			userId,
-			testType,
+			testId,
 			startTime,
 			finishTime,
+			score,
+			number,
 			wrong,
 		});
 
 		await newTestAttempt.save();
 		reply.send({ success: true, message: "Test attempt saved" });
 	} catch (error) {
+		console.error("Couldn't save the test attempt", error);
 		reply.status(500).send({
 			success: false,
 			message: "Couldn't save the test attempt",
-			error,
+			error: error.message,
 		});
 	}
 }
@@ -62,6 +101,7 @@ async function saveTestAttempt(request, reply) {
 module.exports = {
 	getAllProviders,
 	getTestsByProvider,
+	getUserProgress,
 	getTestById,
 	saveTestAttempt,
 };
