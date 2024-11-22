@@ -3,6 +3,45 @@ require("dotenv").config();
 const TestAttempt = require("../models/testAttempt.model");
 const Test = require("../models/test.model");
 
+async function getLeaderboard(request, reply) {
+	try {
+		const mostTests = await TestAttempt.aggregate([
+			{ $group: { _id: "$userId", testCount: { $sum: 1 } } },
+			{ $sort: { testCount: -1 } },
+		]);
+
+		const scores = await TestAttempt.aggregate([
+			{
+				$group: {
+					_id: "$userId",
+					averageScore: { $avg: "$score" },
+				},
+			},
+			{ $sort: { bestScore: -1 } },
+		]);
+
+		const times = await TestAttempt.aggregate([
+			{
+				$group: {
+					_id: "$userId",
+					averageTime: { $avg: { $subtract: ["$finishTime", "$startTime"] } },
+				},
+			},
+			{ $sort: { averageTime: 1 } },
+		]);
+
+		console.log("getLeaderboard results", { mostTests, scores, times });
+
+		reply.send({ mostTests, scores, times });
+	} catch (error) {
+		console.error("Couldn't fetch leaderboard data", error);
+		reply.status(500).send({
+			message: "Couldn't fetch leaderboard data",
+			error: error.message,
+		});
+	}
+}
+
 async function getAllProviders(request, reply) {
 	try {
 		const tests = await Test.find({}, "provider level title description");
@@ -56,10 +95,8 @@ async function getUserProgress(request, reply) {
 			.populate("testId", "provider title")
 			.lean();
 
-		if (progressData.length === 0) {
-			reply
-				.status(404)
-				.send({ message: "Couldn't find any progress data for you" });
+		if (!progressData || progressData.length === 0) {
+			reply.status(204).send();
 			return;
 		}
 
@@ -104,4 +141,5 @@ module.exports = {
 	getUserProgress,
 	getTestById,
 	saveTestAttempt,
+	getLeaderboard,
 };

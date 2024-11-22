@@ -6,6 +6,7 @@ async function testRoutes(fastify, options) {
 	fastify.get("/:provider/:id", testController.getTestById);
 	fastify.post("/:provider/:id/attempt", testController.saveTestAttempt);
 	fastify.get("/progress/:userId", testController.getUserProgress);
+	fastify.get("/leaderboard", testController.getLeaderboard);
 }
 
 module.exports = testRoutes;
