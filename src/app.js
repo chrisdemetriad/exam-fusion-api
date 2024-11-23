@@ -9,7 +9,7 @@ fastify.register(cors, {
 	methods: ["GET", "POST"],
 });
 
-fastify.register(testRoutes, { prefix: "/api/v1/tests" });
+fastify.register(testRoutes);
 
 mongoose
 	.connect(process.env.MONGO_URI)

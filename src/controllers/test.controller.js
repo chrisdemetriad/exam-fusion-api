@@ -51,6 +51,42 @@ async function getAllProviders(request, reply) {
 	}
 }
 
+async function getStatus(request, reply) {
+	try {
+		reply.type("text/html").send(`
+      <html>
+        <head>
+          <title>API Status</title>
+          <style>
+            body {
+              margin: 0;
+              height: 100vh;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-family: Tahoma, sans-serif;
+            }
+            .centered {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              text-align: center;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="centered">
+            <p>API is running</p>
+          </div>
+        </body>
+      </html>
+    `);
+	} catch (error) {
+		reply.status(500).send(error);
+	}
+}
+
 async function getTestsByProvider(request, reply) {
 	try {
 		const { provider } = request.params;
@@ -137,6 +173,7 @@ async function saveTestAttempt(request, reply) {
 
 module.exports = {
 	getAllProviders,
+	getStatus,
 	getTestsByProvider,
 	getUserProgress,
 	getTestById,
