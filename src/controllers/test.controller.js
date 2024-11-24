@@ -44,7 +44,9 @@ async function getLeaderboard(request, reply) {
 
 async function getAllProviders(request, reply) {
 	try {
+		console.time("Get all tests");
 		const tests = await Test.find({}, "provider level title description");
+		console.timeEnd("Get all tests");
 		reply.send(tests);
 	} catch (error) {
 		reply.status(500).send(error);
