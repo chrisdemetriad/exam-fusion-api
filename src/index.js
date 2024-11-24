@@ -5,28 +5,58 @@ require("dotenv").config();
 const testRoutes = require("./routes/test.routes");
 
 fastify.register(cors, {
-	origin: "http://localhost:4000",
+	origin: ["http://localhost:4000", "https://exam-fusion-api.vercel.app"],
 	methods: ["GET", "POST"],
 });
 
 fastify.register(testRoutes);
 
-mongoose
-	.connect(process.env.MONGO_URI)
-	.then(() => {
-		console.log("\x1b[32mDB connected\x1b[0m");
-		const start = async () => {
-			try {
-				await fastify.listen({ port: process.env.PORT ?? 5000 });
-				fastify.log.info(`API running on ${fastify.server.address().port}`);
-			} catch (error) {
-				fastify.log.error(error.err);
-				process.exit(1);
-			}
-		};
-		start();
-	})
-	.catch((error) => {
+let isMongoConnected = false;
+
+const connectToMongo = async () => {
+	if (isMongoConnected) return;
+
+	try {
+		await mongoose.connect(process.env.MONGO_URI, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		});
+		isMongoConnected = true;
+		console.log("DB connected");
+	} catch (error) {
 		console.error("DB connection error:", error);
 		process.exit(1);
-	});
+	}
+};
+
+const closeMongoConnection = async () => {
+	if (isMongoConnected) {
+		await mongoose.disconnect();
+		console.log("DB connection closed");
+	}
+};
+
+fastify.addHook("onRequest", async (request, reply) => {
+	await connectToMongo();
+});
+
+const startFastify = async () => {
+	try {
+		const port = process.env.PORT ?? 5000;
+		await fastify.listen({ port });
+		fastify.log.info(`API running on port ${port}`);
+	} catch (error) {
+		fastify.log.error(error);
+		process.exit(1);
+	}
+};
+
+startFastify();
+
+const handleExit = async (signal) => {
+	await closeMongoConnection();
+	process.exit(0);
+};
+
+process.on("SIGINT", handleExit);
+process.on("SIGTERM", handleExit);
