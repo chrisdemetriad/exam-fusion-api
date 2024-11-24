@@ -1,9 +1,8 @@
 const fastify = require("fastify")({ logger: true });
 const cors = require("@fastify/cors");
-const mongoose = require("mongoose");
 require("dotenv").config();
 const testRoutes = require("./routes/test.routes");
-const connectToDatabase = require("./createDbConnection");
+const { connectToDatabase, closeMongoConnection } = require("./mongo");
 
 fastify.register(cors, {
 	origin: ["http://localhost:4000", "https://exam-fusion-api.vercel.app"],
@@ -11,15 +10,6 @@ fastify.register(cors, {
 });
 
 fastify.register(testRoutes);
-
-let isMongoConnected = false;
-
-const closeMongoConnection = async () => {
-	if (isMongoConnected) {
-		await mongoose.disconnect();
-		console.log("DB connection closed");
-	}
-};
 
 fastify.addHook("onRequest", async (request, reply) => {
 	try {
@@ -44,6 +34,7 @@ const startFastify = async () => {
 startFastify();
 
 const handleExit = async (signal) => {
+	console.log(`Received ${signal}. Closing MongoDB connection...`);
 	await closeMongoConnection();
 	process.exit(0);
 };

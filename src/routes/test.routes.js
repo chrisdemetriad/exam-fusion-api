@@ -2,7 +2,7 @@ const testController = require("../controllers/test.controller");
 const mongoose = require("mongoose");
 const PREFIX = "/api/v1/tests";
 
-const connectToDatabase = require("./../createDbConnection");
+const connectToDatabase = require("../mongo");
 
 async function testRoutes(fastify, options) {
 	fastify.get("/status", async (request, reply) => {

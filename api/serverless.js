@@ -3,7 +3,7 @@ dotenv.config();
 
 import Fastify from "fastify";
 import testRoutes from "../src/routes/test.routes";
-import connectToDatabase from "../src/createDbConnection";
+import { connectToDatabase } from "../src/mongo";
 
 const app = Fastify({
 	logger: true,

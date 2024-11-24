@@ -1,10 +1,10 @@
 require("dotenv").config();
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 
 const TestAttempt = require("../models/testAttempt.model");
 const Test = require("../models/test.model");
 
-const connectToDatabase = require("./../createDbConnection");
+// const connectToDatabase = require("../mongo");
 
 async function getLeaderboard(request, reply) {
 	try {
