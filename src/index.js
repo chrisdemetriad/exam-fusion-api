@@ -3,6 +3,7 @@ const cors = require("@fastify/cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const testRoutes = require("./routes/test.routes");
+const connectToDatabase = require("./createDbConnection");
 
 fastify.register(cors, {
 	origin: ["http://localhost:4000", "https://exam-fusion-api.vercel.app"],
@@ -13,22 +14,6 @@ fastify.register(testRoutes);
 
 let isMongoConnected = false;
 
-const connectToMongo = async () => {
-	if (isMongoConnected) return;
-
-	try {
-		await mongoose.connect(process.env.MONGODB_URI, {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		});
-		isMongoConnected = true;
-		console.log("DB connected");
-	} catch (error) {
-		console.error("DB connection error:", error);
-		process.exit(1);
-	}
-};
-
 const closeMongoConnection = async () => {
 	if (isMongoConnected) {
 		await mongoose.disconnect();
@@ -37,7 +22,12 @@ const closeMongoConnection = async () => {
 };
 
 fastify.addHook("onRequest", async (request, reply) => {
-	await connectToMongo();
+	try {
+		await connectToDatabase();
+	} catch (error) {
+		console.error("Mongo connection issue during request: ", error);
+		reply.status(500).send({ error: "Mongo connection failed" });
+	}
 });
 
 const startFastify = async () => {

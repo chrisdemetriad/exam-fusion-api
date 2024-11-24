@@ -1,7 +1,10 @@
 require("dotenv").config();
+const mongoose = require("mongoose");
 
 const TestAttempt = require("../models/testAttempt.model");
 const Test = require("../models/test.model");
+
+const connectToDatabase = require("./../createDbConnection");
 
 async function getLeaderboard(request, reply) {
 	try {
@@ -44,12 +47,23 @@ async function getLeaderboard(request, reply) {
 
 async function getAllProviders(request, reply) {
 	try {
+		// 		if (mongoose.connection.readyState !== 1) {
+		// 			await connectToDatabase();
+		// 		}
 		console.time("Get all tests");
-		const tests = await Test.find({}, "provider level title description");
+		const tests = await Test.find(
+			{},
+			"provider level title description",
+		).lean();
 		console.timeEnd("Get all tests");
 		reply.send(tests);
 	} catch (error) {
-		reply.status(500).send(error);
+		console.error("Error fetching providers:", error);
+		reply.status(500).send({
+			status: "Error",
+			message: "Failed to fetch providers",
+			error: error.message,
+		});
 	}
 }
 

@@ -2,27 +2,28 @@ const testController = require("../controllers/test.controller");
 const mongoose = require("mongoose");
 const PREFIX = "/api/v1/tests";
 
+const connectToDatabase = require("./../createDbConnection");
+
 async function testRoutes(fastify, options) {
 	fastify.get("/status", async (request, reply) => {
 		try {
-			const mongoStatus = mongoose.connection.readyState;
+			if (mongoose.connection.readyState !== 1) {
+				console.log("Mongo not connected, trying to reconnect");
+				await connectToDatabase();
+			}
 
-			if (mongoStatus !== 1) {
-				return reply.status(500).send({
-					status: "Error",
-					message: "Database isn't really connected - duh",
+			if (mongoose.connection.readyState === 1) {
+				return reply.send({
+					status: "API is running",
+					dbStatus: "Connected",
 				});
 			}
 
-			return reply.send({
-				status: "API is running",
-				mongoStatus: "Connected",
-			});
+			throw new Error("Database isn't really connected");
 		} catch (error) {
 			return reply.status(500).send({
 				status: "Error",
-				message: "Test check failed",
-				error: error.message,
+				message: error.message,
 			});
 		}
 	});
