@@ -2,11 +2,17 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import Fastify from "fastify";
+import cors from "@fastify/cors";
 import testRoutes from "../src/routes/test.routes";
 import { connectToDatabase } from "../src/mongo";
 
 const app = Fastify({
 	logger: true,
+});
+
+app.register(cors, {
+	origin: ["http://localhost:4000", "https://exam-fusion.vercel.app"],
+	methods: ["GET", "POST"],
 });
 
 app.register(testRoutes);

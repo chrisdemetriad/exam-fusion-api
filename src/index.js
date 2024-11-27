@@ -5,7 +5,7 @@ const testRoutes = require("./routes/test.routes");
 const { connectToDatabase, closeMongoConnection } = require("./mongo");
 
 fastify.register(cors, {
-	origin: ["http://localhost:4000", "https://exam-fusion-api.vercel.app"],
+	origin: ["http://localhost:4000", "https://exam-fusion.vercel.app"],
 	methods: ["GET", "POST"],
 });
 
