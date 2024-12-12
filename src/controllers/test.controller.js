@@ -142,9 +142,12 @@ async function getTestById(request, reply) {
 async function getUserProgress(request, reply) {
 	try {
 		const { userId } = request.params;
+		const { limit = 20 } = request.query;
 
 		const progressData = await TestAttempt.find({ userId })
 			.populate("testId", "provider title")
+			.sort({ testDate: -1 })
+			.limit(Number(limit))
 			.lean();
 
 		if (!progressData || progressData.length === 0) {
@@ -154,7 +157,6 @@ async function getUserProgress(request, reply) {
 
 		reply.send(progressData);
 	} catch (error) {
-		console.error("Couldn't fetch user progress", error);
 		reply.status(500).send({ message: "Couldn't fetch user progress", error });
 	}
 }
