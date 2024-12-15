@@ -20,7 +20,7 @@ async function getLeaderboard(request, reply) {
 					averageScore: { $avg: "$score" },
 				},
 			},
-			{ $sort: { bestScore: -1 } },
+			{ $sort: { bestScore: 1 } },
 		]);
 
 		const times = await TestAttempt.aggregate([
