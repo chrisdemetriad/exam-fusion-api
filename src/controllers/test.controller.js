@@ -51,10 +51,7 @@ async function getAllProviders(request, reply) {
 		// 			await connectToDatabase();
 		// 		}
 		console.time("Get all tests");
-		const tests = await Test.find(
-			{},
-			"provider level title description",
-		).lean();
+		const tests = await Test.find({}, "provider level title description").lean();
 		console.timeEnd("Get all tests");
 		reply.send(tests);
 	} catch (error) {
@@ -127,9 +124,7 @@ async function getTestById(request, reply) {
 			}
 			reply.send(test);
 		} else if (test) {
-			reply
-				.status(400)
-				.send({ message: "It doesn't belong to requested provider" });
+			reply.status(400).send({ message: "It doesn't belong to requested provider" });
 		} else {
 			reply.status(404).send({ message: "Couldn't find test" });
 		}
@@ -146,7 +141,7 @@ async function getUserProgress(request, reply) {
 
 		const progressData = await TestAttempt.find({ userId })
 			.populate("testId", "provider title")
-			.sort({ testDate: -1 })
+			.sort({ finishTime: -1 })
 			.limit(Number(limit))
 			.lean();
 
@@ -163,8 +158,7 @@ async function getUserProgress(request, reply) {
 
 async function saveTestAttempt(request, reply) {
 	try {
-		const { userId, startTime, finishTime, score, number, wrong } =
-			request.body;
+		const { userId, startTime, finishTime, score, number, wrong } = request.body;
 		const { id: testId } = request.params;
 
 		const newTestAttempt = new TestAttempt({
